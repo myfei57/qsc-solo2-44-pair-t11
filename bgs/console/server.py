@@ -40,7 +40,7 @@ class _Handler(BaseHTTPRequestHandler):
             body = self._read_body() if method == "POST" else {}
             response = self.router.handle(Request(method=method, path=parsed.path, query=query, body=body))
         except LineControlError as error:
-            response = Response.json(error.as_payload(), status=500)
+            response = Response.json(error.as_payload(), status=error.http_status)
         except Exception as error:  # pragma: no cover - defensive
             response = Response.json(
                 {"code": "internal_error", "message": str(error), "context": {}},
