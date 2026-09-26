@@ -22,7 +22,7 @@ class LineControlError(Exception):
         self.context: dict[str, Any] = dict(context)
 
     def as_payload(self) -> dict[str, Any]:
-        return {"code": self.code, "message": self.message}
+        return {"code": self.code, "message": self.message, "context": dict(self.context)}
 
 
 class ValidationError(LineControlError):

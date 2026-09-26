@@ -227,6 +227,7 @@ class LineControlRuntime:
             "status": "ok",
             "line": self.config.line_name,
             "tick": self.clock.now(),
+            "watermark": self.store.watermark().describe(),
             "records": self.store.last_seq(),
             "visible": len(self.store.visible()),
             "batches": self.batches.count(),

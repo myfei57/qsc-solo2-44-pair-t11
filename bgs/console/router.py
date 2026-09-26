@@ -109,15 +109,16 @@ class Router:
         """Return the handler for ``method`` and ``path``."""
 
         verb = method.upper()
+        path_matched = False
         for route in self._routes:
             params = route.match_path(path)
             if params is None:
                 continue
             if route.method == verb:
                 return route, params
-        for route in self._routes:
-            if route.pattern == "/":
-                return route, {}
+            path_matched = True
+        if path_matched:
+            raise MethodNotAllowedError("the path exists but not for this method", method=verb, path=path)
         raise NotFoundError("no route matches this path", path=path)
 
     def handle(self, request: Request) -> Response:
